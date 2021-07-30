@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { GoMarkGithub } from "react-icons/go";
 import { FaFacebook } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./LoginRegisterScreen.scss";
 
 const LoginRegisterScreen = ({ history }) => {
@@ -20,53 +22,117 @@ const LoginRegisterScreen = ({ history }) => {
   // Overlay Animation
   const [isActive, setActive] = useState(false);
 
+  const regex =
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+
   useEffect(() => {}, []);
 
-  const registerHandler = async (e) => {
-    e.preventDefault();
-    console.log("Register hander called");
-
-    // const config = {
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // };
-
-    if (registerPassword !== registerConfirmPassword) {
-      setRegisterPassword("");
-      setRegisterConfirmPassword("");
-      setTimeout(() => {
-        setRegisterError("");
-      }, 5000);
-      return setRegisterError("Passwords do not match");
-    }
-
+  // <--- REGISTER --->
+  const register = async (name, email, password) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
     try {
+      const { data } = await axios.post(
+        "http://127.0.0.1:5000/api/signup",
+        { name, email, password },
+        config
+      );
+      toast.info(`${data.message}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     } catch (error) {
-      setRegisterError(error.response.data.error);
-      setTimeout(() => {
-        setRegisterError("");
-      }, 5000);
+      toast.error(`${error.response.data.error}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
-  const loginHandler = async (e) => {
+  const registerHandler = (e) => {
     e.preventDefault();
-    console.log("Login hander called");
+    console.log("Register hander called");
 
-    // const config = {
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // };
+    !regex.test(registerPassword)
+      ? toast.error(
+          "Password must contain atleast 8 characters & one alphabet, number & special character",
+          {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          }
+        )
+      : registerPassword !== registerConfirmPassword
+      ? toast.error("Passwords do not match!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        })
+      : register(registerUsername, registerEmail, registerPassword);
+  };
+
+  // <--- LOGIN --->
+  const login = async (email, password) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
 
     try {
+      const { data } = await axios.post(
+        "http://127.0.0.1:5000/api/signin",
+        { email, password },
+        config
+      );
+
+      toast.info(`Welcome! ${data.user.name}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     } catch (error) {
-      setLoginError(error.response.data.error);
-      setTimeout(() => {
-        setLoginError("");
-      }, 5000);
+      toast.error(`${error.response.data.error}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
+  };
+
+  const loginHandler = (e) => {
+    e.preventDefault();
+    console.log("Login hander called");
+    login(loginEmail, loginPassword);
   };
 
   // Overlay Animation
@@ -79,7 +145,8 @@ const LoginRegisterScreen = ({ history }) => {
   return (
     <>
       <div className="main">
-        {registerError && <h4 className="error-message">{registerError}</h4>}
+        <ToastContainer />
+        {/* {registerError && <h4 className="error-message">{registerError}</h4>} */}
         {loginError && <h4 className="error-message">{loginError}</h4>}
         <div
           className={isActive ? "container right-pannel-active" : "container"}
@@ -147,7 +214,7 @@ const LoginRegisterScreen = ({ history }) => {
                 value={loginPassword}
                 onChange={(e) => setLoginPassword(e.target.value)}
               />
-              <Link to="/forgotPassword">Forgot your password?</Link>
+              <Link to="/forgot-password">Forgot your password?</Link>
               <button type="submit">Login</button>
             </form>
           </div>
@@ -155,7 +222,6 @@ const LoginRegisterScreen = ({ history }) => {
             <div className="overlay">
               <div className="overlay-panel overlay-left">
                 <h1>Welcome Back</h1>
-                {/*<p>Please login with your personal info</p> */}
                 <div className="undraw">
                   <img src="./images/login.svg" alt="Login" />
                 </div>
@@ -165,7 +231,6 @@ const LoginRegisterScreen = ({ history }) => {
               </div>
               <div className="overlay-panel overlay-right">
                 <h1>CREATE ACCOUNT</h1>
-                {/* <p>Be the part of our community, join us today</p> */}
                 <div className="undraw">
                   <img src="./images/register.svg" alt="Register" />
                 </div>
