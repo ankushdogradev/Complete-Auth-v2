@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 
 // SendGrid
 const sgMail = require("@sendgrid/mail");
+const { findOne } = require("../models/userModels");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 //  @description: Signup
@@ -92,8 +93,36 @@ exports.accountActivation = (req, res, next) => {
   }
 };
 
-exports.signin = (req, res, next) => {
-  res.send("Signin");
+//  @description: Signin
+//  @route: POST /api/signin
+//  @access: Public
+exports.signin = async (req, res, next) => {
+  // if (!email || !password) {
+  //   return next(new ErrorResponse("Please enter credentials properly", 400));
+  // }
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return next(new ErrorResponse("Email not registered", 401));
+    }
+
+    const isMatch = await user.matchPasswords(password);
+    if (!isMatch) {
+      return next(new ErrorResponse("Invalid Password", 401));
+    }
+
+    const token = user.getSignedJwtToken();
+    const { _id, name, isAdmin } = user;
+    res
+      .status(200)
+      .json({ success: true, token, user: { _id, name, email, isAdmin } });
+  } catch (error) {
+    console.log("%% ", error);
+    next(error);
+  }
 };
 
 exports.forgotPassword = (req, res, next) => {
