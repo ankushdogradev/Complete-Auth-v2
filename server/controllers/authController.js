@@ -1,6 +1,5 @@
 const User = require("../models/userModels");
 const ErrorResponse = require("../error/errorResponse");
-const _ = require("lodash");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 
