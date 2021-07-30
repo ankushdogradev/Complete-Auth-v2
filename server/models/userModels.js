@@ -8,19 +8,20 @@ const userSchema = new mongoose.Schema(
     name: {
       type: String,
       trim: true,
-      required: true,
+      required: [true, "Please enter your name"],
       max: 32,
     },
     email: {
       type: String,
       trim: true,
-      required: true,
+      required: [true, "Please enter your email"],
       unique: true,
       lowercase: true,
     },
     password: {
       type: String,
-      required: true,
+      required: [true, "Please enter a valid password"],
+      minlength: 8,
     },
     isAdmin: {
       type: Boolean,
