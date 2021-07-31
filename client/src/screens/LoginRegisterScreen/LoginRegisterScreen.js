@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
@@ -13,19 +13,15 @@ const LoginRegisterScreen = ({ history }) => {
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
   const [registerConfirmPassword, setRegisterConfirmPassword] = useState("");
-  const [registerError, setRegisterError] = useState("");
 
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
-  const [loginError, setLoginError] = useState("");
 
   // Overlay Animation
   const [isActive, setActive] = useState(false);
 
   const regex =
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
-
-  useEffect(() => {}, []);
 
   // <--- REGISTER --->
   const register = async (name, email, password) => {
@@ -40,6 +36,10 @@ const LoginRegisterScreen = ({ history }) => {
         { name, email, password },
         config
       );
+      setRegisterUsername("");
+      setRegisterEmail("");
+      setRegisterPassword("");
+      setRegisterConfirmPassword("");
       toast.info(`${data.message}`, {
         position: "top-right",
         autoClose: 5000,
@@ -50,6 +50,7 @@ const LoginRegisterScreen = ({ history }) => {
         progress: undefined,
       });
     } catch (error) {
+      console.log(error);
       toast.error(`${error.response.data.error}`, {
         position: "top-right",
         autoClose: 5000,
@@ -106,17 +107,32 @@ const LoginRegisterScreen = ({ history }) => {
         { email, password },
         config
       );
-
-      toast.info(`Welcome! ${data.user.name}`, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      setLoginEmail("");
+      setLoginPassword("");
+      console.log("Data: ", data);
+      if (data.user.isVerify) {
+        toast.info(`Welcome! ${data.user.name}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      } else if (!data.user.isVerify) {
+        toast.info(`Verification Email has been sent to ${data.user.email}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
     } catch (error) {
+      console.log(error);
       toast.error(`${error.response.data.error}`, {
         position: "top-right",
         autoClose: 5000,
@@ -146,8 +162,6 @@ const LoginRegisterScreen = ({ history }) => {
     <>
       <div className="main">
         <ToastContainer />
-        {/* {registerError && <h4 className="error-message">{registerError}</h4>} */}
-        {loginError && <h4 className="error-message">{loginError}</h4>}
         <div
           className={isActive ? "container right-pannel-active" : "container"}
         >

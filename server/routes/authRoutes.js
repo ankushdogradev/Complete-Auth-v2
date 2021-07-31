@@ -11,7 +11,7 @@ const {
 } = require("../controllers/authController");
 
 router.post("/signup", signup);
-router.post("/account-activation", accountActivation);
+router.put("/account-activation/:activationToken", accountActivation);
 router.post("/signin", signin);
 router.put("/forgot-password", forgotPassword);
 router.put("/reset-password", resetPassword);
