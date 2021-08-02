@@ -1,5 +1,5 @@
 import React from "react";
-import { signout } from "../../components/Auth/helpers";
+import { signout } from "../../components/Auth/Store";
 import "./AdminScreen.scss";
 
 const AdminScreen = ({ history }) => {

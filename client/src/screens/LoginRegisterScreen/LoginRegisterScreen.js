@@ -5,7 +5,7 @@ import { FcGoogle } from "react-icons/fc";
 import { GoMarkGithub } from "react-icons/go";
 import { FaFacebook } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
-import { authenticate, isAuth } from "../../components/Auth/helpers";
+import { authenticate, isAuth } from "../../components/Auth/Store";
 import "react-toastify/dist/ReactToastify.css";
 import "./LoginRegisterScreen.scss";
 
@@ -121,7 +121,7 @@ const LoginRegisterScreen = ({ history }) => {
           progress: undefined,
         });
         authenticate(data, () => {
-          isAuth() && isAuth().role === "admin"
+          isAuth() && isAuth().isAdmin
             ? history.push("/admin")
             : history.push("/");
         });

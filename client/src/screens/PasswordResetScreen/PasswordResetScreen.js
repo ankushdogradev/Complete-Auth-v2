@@ -18,7 +18,7 @@ const PasswordResetScreen = ({ match, history }) => {
           "Content-Type": "application/json",
         },
       };
-      const { data } = await axios.put(
+      await axios.put(
         `http://127.0.0.1:5000/api/reset-password`,
         { resetPasswordToken: resetToken, password },
         config
