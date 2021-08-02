@@ -6,6 +6,7 @@ import { GoMarkGithub } from "react-icons/go";
 import { FaFacebook } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import { authenticate, isAuth } from "../../components/Auth/Store";
+import Google from "../../components/Auth/Google";
 import "react-toastify/dist/ReactToastify.css";
 import "./LoginRegisterScreen.scss";
 
@@ -155,6 +156,13 @@ const LoginRegisterScreen = ({ history }) => {
     login(loginEmail, loginPassword);
   };
 
+  // <--- GOOGLE --->
+  const informParent = (data) => {
+    authenticate(data, () => {
+      isAuth() && isAuth().isAdmin ? history.push("/admin") : history.push("/");
+    });
+  };
+
   // Overlay Animation
   const registerAni = () => {
     setActive(true);
@@ -213,9 +221,9 @@ const LoginRegisterScreen = ({ history }) => {
             <form onSubmit={loginHandler}>
               <h1>Login</h1>
               <div className="social-container">
+                <Google className="social" informParent={informParent} />
                 <GoMarkGithub className="social github" />
                 <FaFacebook className="social facebook" />
-                <FcGoogle className="social" />
               </div>
               <span>or use your account</span>
               <input

@@ -2,6 +2,7 @@ const User = require("../models/userModels");
 const ErrorResponse = require("../error/errorResponse");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
+const { OAuth2Client } = require("google-auth-library");
 
 // SendGrid
 const sgMail = require("@sendgrid/mail");
@@ -262,4 +263,62 @@ exports.resetPassword = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+
+// GOOGLE Signin
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+//  @description: Google Auth
+//  @route: POST /api/google-login
+//  @access: Public
+exports.googleLogin = async (req, res, next) => {
+  const { idToken } = req.body;
+
+  client
+    .verifyIdToken({ idToken, audience: process.env.GOOGLE_CLIENT_ID })
+    .then((response) => {
+      console.log("Google Login: ", response);
+      const { email_verified, name, email } = response.payload;
+      if (email_verified) {
+        User.findOne({ email }).exec((err, user) => {
+          if (user) {
+            const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+              expiresIn: "7d",
+            });
+            const { _id, email, name, isAdmin, isVerified } = user;
+            return res.json({
+              token,
+              user: { _id, email, name, isAdmin, isVerified },
+            });
+          } else {
+            let password = email + process.env.JWT_SECRET;
+            let isVerify = true;
+            user = new User({ name, email, password, isVerify });
+            user.save((err, data) => {
+              if (err) {
+                console.log("Error Google logging on user Save", err);
+                return next(
+                  new ErrorResponse("Error: Signup failed with google", 400)
+                );
+              }
+
+              const token = jwt.sign(
+                { _id: data._id },
+                process.env.JWT_SECRET,
+                {
+                  expiresIn: "7d",
+                }
+              );
+              const { _id, isAdmin, isVerified } = data;
+              return res.json({
+                token,
+                user: { _id, email, name, isAdmin, isVerified },
+              });
+            });
+          }
+        });
+      } else {
+        return next(new ErrorResponse("Google login failed. Try again", 400));
+      }
+    });
 };

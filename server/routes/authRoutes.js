@@ -8,6 +8,7 @@ const {
   signin,
   forgotPassword,
   resetPassword,
+  googleLogin,
 } = require("../controllers/authController");
 
 router.post("/signup", signup);
@@ -16,4 +17,6 @@ router.post("/signin", signin);
 router.put("/forgot-password", forgotPassword);
 router.put("/reset-password", resetPassword);
 
+// Google
+router.post("/google-login", googleLogin);
 module.exports = router;
