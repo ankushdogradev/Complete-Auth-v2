@@ -5,7 +5,6 @@ import axios from "axios";
 
 const Facebook = ({ informParent = (f) => f }) => {
   const responseFacebook = async (res) => {
-    console.log("[Facebook Login]: ", res);
     try {
       const { data } = await axios.post(
         "http://127.0.0.1:5000/api/facebook-login",

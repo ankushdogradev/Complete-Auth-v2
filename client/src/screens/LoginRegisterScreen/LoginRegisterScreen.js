@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
-import { GoMarkGithub } from "react-icons/go";
-import { FaFacebook } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import { authenticate, isAuth } from "../../components/Auth/Store";
 import Google from "../../components/Auth/Google";
@@ -183,7 +180,6 @@ const LoginRegisterScreen = ({ history }) => {
               <h1>Create Account</h1>
               <div className="social-container">
                 <Google className="social" informParent={informParent} />
-                <GoMarkGithub className="social github" />
                 <Facebook
                   className="social facebook"
                   informParent={informParent}
@@ -226,7 +222,6 @@ const LoginRegisterScreen = ({ history }) => {
               <h1>Login</h1>
               <div className="social-container">
                 <Google className="social" informParent={informParent} />
-                <GoMarkGithub className="social github" />
                 <Facebook
                   className="social facebook"
                   informParent={informParent}

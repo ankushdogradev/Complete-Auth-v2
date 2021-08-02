@@ -5,7 +5,6 @@ import axios from "axios";
 
 const Google = ({ informParent = (f) => f }) => {
   const onSuccess = async (res) => {
-    console.log("[Google Login Success] tokenId: ", res.tokenId);
     try {
       const { data } = await axios.post(
         "http://127.0.0.1:5000/api/google-login",
