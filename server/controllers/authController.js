@@ -3,6 +3,7 @@ const ErrorResponse = require("../error/errorResponse");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const { OAuth2Client } = require("google-auth-library");
+const fetch = require("node-fetch");
 
 // SendGrid
 const sgMail = require("@sendgrid/mail");
@@ -320,5 +321,60 @@ exports.googleLogin = async (req, res, next) => {
       } else {
         return next(new ErrorResponse("Google login failed. Try again", 400));
       }
+    });
+};
+
+//  @description: Facebook Auth
+//  @route: POST /api/facebook-login
+//  @access: Public
+exports.facebookLogin = async (req, res, next) => {
+  console.log("Facebook Login Req body", req.body);
+  const { userID, accessToken } = req.body;
+
+  const url = `https://graph.facebook.com/v2.11/${userID}/?fields=id,name,email&access_token=${accessToken}`;
+  return fetch(url, {
+    method: "GET",
+  })
+    .then((response) => response.json())
+    .then((response) => {
+      const { email, name } = response;
+      User.findOne({ email }).exec((err, user) => {
+        if (user) {
+          const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+            expiresIn: "7d",
+          });
+          const { _id, email, name, isAdmin, isVerified } = user;
+          return res.json({
+            token,
+            user: { _id, email, name, isAdmin, isVerified },
+          });
+        } else {
+          let password = email + process.env.JWT_SECRET;
+          let isVerify = true;
+          user = new User({ name, email, password, isVerify });
+          user.save((err, data) => {
+            if (err) {
+              console.log("Error Facebook logging on user Save", err);
+              return next(
+                new ErrorResponse("Error: Signup failed with Facebook", 400)
+              );
+            }
+
+            const token = jwt.sign({ _id: data._id }, process.env.JWT_SECRET, {
+              expiresIn: "7d",
+            });
+            const { _id, isAdmin, isVerified } = data;
+            return res.json({
+              token,
+              user: { _id, email, name, isAdmin, isVerified },
+            });
+          });
+        }
+      });
+    })
+    .catch((error) => {
+      res.json({
+        error: "Facebook login failed, try again",
+      });
     });
 };

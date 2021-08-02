@@ -7,6 +7,7 @@ import { FaFacebook } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import { authenticate, isAuth } from "../../components/Auth/Store";
 import Google from "../../components/Auth/Google";
+import Facebook from "../../components/Auth/Facebook";
 import "react-toastify/dist/ReactToastify.css";
 import "./LoginRegisterScreen.scss";
 
@@ -181,9 +182,12 @@ const LoginRegisterScreen = ({ history }) => {
             <form onSubmit={registerHandler}>
               <h1>Create Account</h1>
               <div className="social-container">
+                <Google className="social" informParent={informParent} />
                 <GoMarkGithub className="social github" />
-                <FaFacebook className="social facebook" />
-                <FcGoogle className="social" />
+                <Facebook
+                  className="social facebook"
+                  informParent={informParent}
+                />
               </div>
               <span>or use your email for registration</span>
               <input
@@ -223,7 +227,10 @@ const LoginRegisterScreen = ({ history }) => {
               <div className="social-container">
                 <Google className="social" informParent={informParent} />
                 <GoMarkGithub className="social github" />
-                <FaFacebook className="social facebook" />
+                <Facebook
+                  className="social facebook"
+                  informParent={informParent}
+                />
               </div>
               <span>or use your account</span>
               <input
