@@ -14,8 +14,6 @@ const ConfirmEmailScreen = ({ match, history }) => {
           `http://127.0.0.1:5000/api/account-activation/${activationToken}`
         );
         if (data.user.isVerify) {
-          console.log("Redirecting... to /login-register");
-          // return <Redirect to="/login-register" />;
           toast.success(`Email Verified, you will be redirected shortly`, {
             position: "top-center",
             autoClose: 5000,
@@ -30,7 +28,7 @@ const ConfirmEmailScreen = ({ match, history }) => {
           }, 3000);
         }
       } catch (error) {
-        console.log("Error >>> ", error.response.data.error);
+        console.log("Error:", error);
         toast.error(`${error.response.data.error}`, {
           position: "top-center",
           autoClose: 5000,

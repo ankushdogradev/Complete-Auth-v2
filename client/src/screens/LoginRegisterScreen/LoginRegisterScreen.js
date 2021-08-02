@@ -5,6 +5,7 @@ import { FcGoogle } from "react-icons/fc";
 import { GoMarkGithub } from "react-icons/go";
 import { FaFacebook } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
+import { authenticate, isAuth } from "../../components/Auth/helpers";
 import "react-toastify/dist/ReactToastify.css";
 import "./LoginRegisterScreen.scss";
 
@@ -65,7 +66,6 @@ const LoginRegisterScreen = ({ history }) => {
 
   const registerHandler = (e) => {
     e.preventDefault();
-    console.log("Register hander called");
 
     !regex.test(registerPassword)
       ? toast.error(
@@ -109,7 +109,7 @@ const LoginRegisterScreen = ({ history }) => {
       );
       setLoginEmail("");
       setLoginPassword("");
-      console.log("Data: ", data);
+
       if (data.user.isVerify) {
         toast.info(`Welcome! ${data.user.name}`, {
           position: "top-right",
@@ -119,6 +119,11 @@ const LoginRegisterScreen = ({ history }) => {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
+        });
+        authenticate(data, () => {
+          isAuth() && isAuth().role === "admin"
+            ? history.push("/admin")
+            : history.push("/");
         });
       } else if (!data.user.isVerify) {
         toast.info(`Verification Email has been sent to ${data.user.email}`, {
@@ -147,7 +152,6 @@ const LoginRegisterScreen = ({ history }) => {
 
   const loginHandler = (e) => {
     e.preventDefault();
-    console.log("Login hander called");
     login(loginEmail, loginPassword);
   };
 

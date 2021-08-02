@@ -189,7 +189,7 @@ exports.forgotPassword = async (req, res, next) => {
       subject: `Password Reset link`,
       html: `
           <h1>Please use the following link to reset your password</h1>
-          <p>${process.env.CLIENT_URL}/auth/password/reset/${resetToken}</p>
+          <p>${process.env.CLIENT_URL}/password-reset/${resetToken}</p>
           <hr />
           <p>This email may contain sensetive information</p>
           <p>${process.env.CLIENT_URL}</p>
@@ -230,6 +230,7 @@ exports.forgotPassword = async (req, res, next) => {
 //  @access: Public
 exports.resetPassword = async (req, res, next) => {
   const { resetPasswordToken } = req.body;
+  console.log("Reset Token Server >>> ", resetPasswordToken);
   try {
     if (resetPasswordToken) {
       jwt.verify(

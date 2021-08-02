@@ -65,7 +65,7 @@
     }
 
     button {
-      border-radius: 20px;
+      border-radius: 8px;
       border: 1px solid $accent-color;
       background: $accent-color;
       color: $text-color;
@@ -111,6 +111,7 @@
         padding: 12px 15px;
         margin: 8px 0;
         width: 100%;
+        border-radius: 8px;
       }
     }
 
