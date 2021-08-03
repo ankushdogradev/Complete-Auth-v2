@@ -25,7 +25,7 @@ const Google = ({ informParent = (f) => f }) => {
   return (
     <>
       <GoogleLogin
-        clientId="386485948244-vd2r3ndi04fcerhej5q334f5ujjmngv3.apps.googleusercontent.com"
+        clientId={`${process.env.REACT_APP_GOOGLE_CLIENT_ID}`}
         render={(renderProps) => (
           <FcGoogle
             onClick={renderProps.onClick}
