@@ -59,6 +59,7 @@ npm i
  [SendGrid](https://sendgrid.com/) for sendgrid api key.
 
 6. Create two **.env** files one in project root folder & other in the client directories root folder. like this:
+
 ![image](https://user-images.githubusercontent.com/75878788/128022735-5f135c3b-3a86-434a-b120-a924f54d6cea.png)
 
 7. Make sure to update the .env path in [**server.js**](server/server.js). Replace `<YOUR_PATH>` & `<PROJECT_NAME>` accordingly:
