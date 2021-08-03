@@ -4,6 +4,7 @@
   "description": "Full authentication website with defined user roles (Admin/User)",
   "main": "server.js",
   "scripts": {
+    "start": "node server/server",
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "npm rebuild node-sass && npm install --unsafe-perm -f node-sass",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"

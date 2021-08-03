@@ -10,13 +10,13 @@ const connectDB = require("./config/db");
 const errorHandler = require("./error/errorHandler");
 const User = require("./models/userModels");
 const authRoutes = require("./routes/authRoutes");
+const path = require("path");
 
 connectDB();
 
 const app = express();
 
-// app.use(cors());
-if ((process.env.NODE_ENV = "development")) {
+if (process.env.NODE_ENV === "development") {
   app.use(cors({ origin: `http://localhost:3000` }));
 }
 
@@ -43,6 +43,7 @@ const deleteOldUsers = () => {
 // >>>>>>> ~ Delete User Data if not verified ~ <<<<<<<
 
 // Deployment
+console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
   app.get("*", (req, res) =>
