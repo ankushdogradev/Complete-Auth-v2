@@ -1,5 +1,7 @@
 import cookie from "js-cookie";
 
+// ********************************************************
+
 // set in cookie
 export const setCookie = (key, value) => {
   if (window !== "undefined") {
@@ -26,6 +28,8 @@ export const getCookie = (key) => {
   }
 };
 
+// ********************************************************
+
 // set in localstorage
 export const setLocalStorage = (key, value) => {
   if (window !== "undefined") {
@@ -40,7 +44,6 @@ export const removeLocalStorage = (key) => {
 };
 // authenticate user by passing data to cookie and localstorage during signin
 export const authenticate = (data, next) => {
-  console.log("AUTHENTICATE HELPER ON SIGNIN RESPONSE", data);
   setCookie("token", data.token);
   setLocalStorage("user", data.user);
   next();
