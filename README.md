@@ -3,10 +3,18 @@
 Complete Authentication & Authorization
 
 ## Features
-
+- SignUp/SignIn
+- Email Confirmation
+- Login with Facebook
+- Login with Google
+- Password reset with email
+- Role based redirects (admin or user)
+- Storing JWT in Cookie & user data on localstorage.
 
 
 ## Screenshots
+![Screenshot 2021-08-03 at 18-19-34 Complete Auth](https://user-images.githubusercontent.com/75878788/128020975-851d69f2-d514-464a-ac48-0487d6a8175d.png)
+![Screenshot 2021-08-03 at 18-19-53 Complete Auth](https://user-images.githubusercontent.com/75878788/128020986-1e5bc052-172c-428f-98b3-6d3893fe33e2.png)
 
 
 
@@ -39,10 +47,20 @@ npm i
 4. It is not necessary but recommended to install nodemon globally by `npm i -g nodemon`
 5. You need to create following accounts:
 
-- []() for clientID.
-- [MongoDB Atlas Account](https://www.mongodb.com/cloud/atlas/register) for mongo URI.
+- [Google Cloud Platform](https://console.cloud.google.com/projectselector2/apis/dashboard?authuser=1&organizationId=0&supportedpurview=project&project=&folder=) for google login.
+- [Facebook Developer](https://developers.facebook.com/) for facebook login.
 
-6. In the root folder create **.env** file
+-(Optional: if you are using MongoDB locally ignore it)
+
+ [MongoDB Atlas Account](https://www.mongodb.com/cloud/atlas/register) for mongo URI.
+
+-(OPTIONAL: Only if you are using sendgrid for Email)
+
+ [SendGrid](https://sendgrid.com/) for sendgrid api key.
+
+6. Create two **.env** files one in project root folder & other in the client directories root folder. like this:
+![image](https://user-images.githubusercontent.com/75878788/128022735-5f135c3b-3a86-434a-b120-a924f54d6cea.png)
+
 7. Make sure to update the .env path in [**server.js**](server/server.js). Replace `<YOUR_PATH>` & `<PROJECT_NAME>` accordingly:
 ```
 require("dotenv").config({
@@ -55,16 +73,41 @@ require("dotenv").config({
 
 To run this project, you will need to add the following environment variables to your .env file
 
+**PROJECT ROOT DIRECTORY ENV**
+
 `NODE_ENV = development`
+
+`CLIENT_URL = "your client url: REMOVE DOUBLE QUOTES" `
 
 `PORT = 5000`
 
 `MONGO_URI = "your mongodb uri: REMOVE DOUBLE QUOTES"`
 
-`JWT_SECRET = "any string of your choice: REMOVE DOUBLE QUOTES "`
+`EMAIL_TO = "recipient : REMOVE DOUBLE QUOTES"`
 
-`PAYPAL_CLIENT_ID = "your paypal client id: REMOVE DOUBLE QUOTES"`
+`EMAIL_FROM = "sender : REMOVE DOUBLE QUOTES"`
 
+`SENDGRID_API_KEY = "your sendgrid apikey : REMOVE DOUBLE QUOTES"`
+
+`JWT_SECRET = "random string : REMOVE DOUBLE QUOTES "`
+
+`JWT_EXPIRE = "expire time : REMOVE DOUBLE QUOTES" `
+
+`JWT_ACTIVATION_SECRET = "random string : REMOVE DOUBLE QUOTES"`
+
+`JWT_ACTIVATION_EXPIRE = "expire time : REMOVE DOUBLE QUOTES"`
+
+`JWT_RESET_PASSWORD_SECRET = "randm string : REMOVE DOUBLE QUOTES"`
+
+`JWT_RESET_PASSWORD_EXPIRE = " expire time : REMOVE DOUBLE QUOTES"`
+
+`GOOGLE_CLIENT_ID = "your google client id : REMOVE DOUBLE QUOTES"`
+
+**CLIENT ROOT DIRECTORY ENV**
+
+`REACT_APP_GOOGLE_CLIENT_ID = 'your google client id' `
+
+`REACT_APP_FACEBOOK_APP_ID = 'your facebook app id'`
 
 ## Run Locally
 
