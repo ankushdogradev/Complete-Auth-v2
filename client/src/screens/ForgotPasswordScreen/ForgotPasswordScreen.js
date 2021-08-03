@@ -21,7 +21,7 @@ const ForgotPasswordScreen = () => {
       };
 
       const { data } = await axios.put(
-        "http://127.0.0.1:5000/api/forgot-password",
+        "https://complete-auth-v2.herokuapp.com/api/forgot-password",
         { email },
         config
       );

@@ -7,7 +7,7 @@ const Google = ({ informParent = (f) => f }) => {
   const onSuccess = async (res) => {
     try {
       const { data } = await axios.post(
-        "http://127.0.0.1:5000/api/google-login",
+        "https://complete-auth-v2.herokuapp.com/api/google-login",
         {
           idToken: res.tokenId,
         }

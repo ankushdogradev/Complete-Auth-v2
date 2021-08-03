@@ -19,7 +19,7 @@ const PasswordResetScreen = ({ match, history }) => {
         },
       };
       await axios.put(
-        `http://127.0.0.1:5000/api/reset-password`,
+        `https://complete-auth-v2.herokuapp.com/api/reset-password`,
         { resetPasswordToken: resetToken, password },
         config
       );

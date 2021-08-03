@@ -11,7 +11,7 @@ const ConfirmEmailScreen = ({ match, history }) => {
     const activate = async () => {
       try {
         const { data } = await axios.put(
-          `http://127.0.0.1:5000/api/account-activation/${activationToken}`
+          `https://complete-auth-v2.herokuapp.com/api/account-activation/${activationToken}`
         );
         if (data.user.isVerify) {
           toast.success(`Email Verified, you will be redirected shortly`, {

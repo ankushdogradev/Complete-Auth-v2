@@ -7,7 +7,7 @@ const Facebook = ({ informParent = (f) => f }) => {
   const responseFacebook = async (res) => {
     try {
       const { data } = await axios.post(
-        "http://127.0.0.1:5000/api/facebook-login",
+        "https://complete-auth-v2.herokuapp.com/api/facebook-login",
         {
           userID: res.userID,
           accessToken: res.accessToken,

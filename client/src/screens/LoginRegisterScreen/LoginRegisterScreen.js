@@ -32,7 +32,7 @@ const LoginRegisterScreen = ({ history }) => {
     };
     try {
       const { data } = await axios.post(
-        "http://127.0.0.1:5000/api/signup",
+        "https://complete-auth-v2.herokuapp.com/api/signup",
         { name, email, password },
         config
       );
@@ -102,7 +102,7 @@ const LoginRegisterScreen = ({ history }) => {
 
     try {
       const { data } = await axios.post(
-        "http://127.0.0.1:5000/api/signin",
+        "https://complete-auth-v2.herokuapp.com/api/signin",
         { email, password },
         config
       );
