@@ -10,11 +10,16 @@ Complete Authentication & Authorization
 - Password reset with email
 - Role based redirects (admin or user)
 - Storing JWT in Cookie & user data on localstorage.
+- Unverified users will be deleted automatially after 7 days.
+- Toast notifiations
 
 
 ## Screenshots
 ![Screenshot 2021-08-03 at 18-19-34 Complete Auth](https://user-images.githubusercontent.com/75878788/128020975-851d69f2-d514-464a-ac48-0487d6a8175d.png)
 ![Screenshot 2021-08-03 at 18-19-53 Complete Auth](https://user-images.githubusercontent.com/75878788/128020986-1e5bc052-172c-428f-98b3-6d3893fe33e2.png)
+![image](https://user-images.githubusercontent.com/75878788/128026588-a5a2e240-921d-49ac-b850-e442a6f310ac.png)
+![image](https://user-images.githubusercontent.com/75878788/128026200-02ce01a3-44fa-42c5-8aab-9634e0f103ea.png)
+![image](https://user-images.githubusercontent.com/75878788/128025631-35ef7ebc-e277-4e84-900c-4492f95c37e1.png)
 
 
 
