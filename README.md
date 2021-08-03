@@ -50,13 +50,13 @@ npm i
 - [Google Cloud Platform](https://console.cloud.google.com/projectselector2/apis/dashboard?authuser=1&organizationId=0&supportedpurview=project&project=&folder=) for google login.
 - [Facebook Developer](https://developers.facebook.com/) for facebook login.
 
--(Optional: if you are using MongoDB locally ignore it)
+- (Optional: if you are using MongoDB locally ignore it)
 
- [MongoDB Atlas Account](https://www.mongodb.com/cloud/atlas/register) for mongo URI.
+  [MongoDB Atlas Account](https://www.mongodb.com/cloud/atlas/register) for mongo URI.
 
--(OPTIONAL: Only if you are using sendgrid for Email)
+- (OPTIONAL: Only if you are using sendgrid for Email)
 
- [SendGrid](https://sendgrid.com/) for sendgrid api key.
+  [SendGrid](https://sendgrid.com/) for sendgrid api key.
 
 6. Create two **.env** files one in project root folder & other in the client directories root folder. like this:
 
